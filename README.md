@@ -1,7 +1,7 @@
 # PandoraDownloader
 
-**Status**: Currently is nonfunctional
-Redesigned command line downloader. Separate module based downloader where additional services can be added with the use of modules. Design inspired by MVC (Model-View Controller design). 
+**Status**:
+Currently is nonfunctional!!! Redesigned command line downloader. Separate module based downloader where additional services can be added with the use of modules. Design inspired by MVC (Model-View Controller design). 
 
 **Purpose**: A design which allows adding of many different services with minimal edits to existing code. Provide a pathway for GUI development. Design that is easy to expand upon to for upgrading and switching out of components. 
 
