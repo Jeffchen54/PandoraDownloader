@@ -14,7 +14,13 @@ class ServicesTestCase(unittest.TestCase):
         """
         Tests help
         """
-        Services.print_help()
+        #Services.print_help()
+    
+    def test_get_dict_table(self):
+        """
+        tests get_dict_table
+        """
+        Services.get_config_table()
 
 if __name__ == '__main__':
     unittest.main()
