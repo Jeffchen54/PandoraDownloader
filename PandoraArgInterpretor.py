@@ -22,7 +22,7 @@ def __help_msg(error_msg:str)->None:
     logging.critical("{arg}".format(arg=error_msg))
     print_help()
 
-def interpret(args:list[str])->dict[Service.value, dict]:
+def interpret(args:list[str])->dict[Service, dict]:
     """
     Processes command line arguments and sends 
     back instructions in dict form that can be understood
@@ -45,7 +45,7 @@ def interpret(args:list[str])->dict[Service.value, dict]:
     """
     
     # generate lookup list of configs
-    config_table = Services.get_config_table()
+    config_table = Services.get_switch_to_config_table()
     dict_list = dict()
     pointer = 1
     # Process each line, place it into a task list
@@ -53,7 +53,7 @@ def interpret(args:list[str])->dict[Service.value, dict]:
         # Check if arg is a valid config, if not, print help and return
         if args[pointer] not in config_table:
             
-            Services.print_help("{arg} is not a valid config, please review the switches!".format(arg=args[pointer]))
+            __help_msg("{arg} is not a valid config, please review the switches!".format(arg=args[pointer]))
             return None
         
         # Get config from table
@@ -73,38 +73,33 @@ def interpret(args:list[str])->dict[Service.value, dict]:
             case 0:
                 dict_list[config[2]][config] = True
                 pointer += 1
-                break
             case _:
             # From this point on, next arg is needed
                 if len(args) ==  pointer + 1:
-                    __help_msg("{arg} does not have enough arguments -> here are the required arguments: {supplement}".format(arg=args[pointer], supplement=config[3]))
+                    __help_msg("{arg} does not have enough arguments, here are the required arguments -> {supplement}".format(arg=args[pointer], supplement=config[3]))
+                    return None
             
                 match config[1]:
                     # int
                     case 1:
                         dict_list[config[2]][config] = int(args[pointer + 1])
-                        break
                     # str
                     case 2:
                         dict_list[config[2]][config] = (args[pointer + 1])
-                        break
                     # list[str], comma separated, to lower case
                     case 3:
                         dict_list[config[2]][config] = [token.strip().lower() for token in args[pointer + 1].split(',')]
-                        break
                     # list[int], comma separated
                     case 4:
                         dict_list[config[2]][config] = [int(token.strip()) for token in args[pointer + 1].split(',')]
-                        break
                     # str, absolute file path
                     case 5:
                         dict_list[config[2]][config] = process_file_path(args[pointer + 1])
-                        break
                     # str, absolute dir path
                     case 6:
                         dict_list[config[2]][config] = process_dir_path(args[pointer + 1])
-                        break
                 pointer += 2
+    return dict_list
                     
             
             

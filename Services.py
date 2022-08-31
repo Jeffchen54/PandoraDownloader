@@ -78,7 +78,7 @@ class Config(Enum):
     HTTPS_RETRIES = (('-r', '--http_retries'), 1, Service.BASIC,
                      "<#> : Maximum number of HTTP code retries, default is infinite")
     # Display help options and halt program execution
-    HELP = (('-h',), -1, Service.BASIC, ": Help")
+    HELP = (('-h', '--help'), -1, Service.BASIC, ": Help")
 
     # KEMONO SPECIAL CONFIG ##########################################################################
     # '[#] - [server]' or '[#]' or [server]
